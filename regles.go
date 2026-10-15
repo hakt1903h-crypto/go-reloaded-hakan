@@ -6,7 +6,7 @@ import (
 	"unicode"
 )
 
-//accents avec runes
+// accents avec runes
 func capitaliser(mot string) string {
 	if mot == "" {
 		return mot
@@ -16,12 +16,18 @@ func capitaliser(mot string) string {
 	return string(lettres)
 }
 
-//modifie le mot précédent selon le marqueur (Séance 4)
+// modifie le mot précédent selon le marqueur (Séance 4)
 func appliquerMarqueurs(mots []string) []string {
 	var resultat []string
 
 	for i := 0; i < len(mots); i++ {
 		mot := mots[i]
+
+		// Si le marqueur a été coupé en deux par un espace (correction d'1 probleme qui mettais pas les 2 mots en majuscules)
+		if strings.HasPrefix(mot, "(") && !strings.HasSuffix(mot, ")") && i+1 < len(mots) {
+			mot = mot + " " + mots[i+1]
+			i++
+		}
 
 		// gestion marqueurs (up)(low)(cap)(hex)(bin)
 		if strings.HasPrefix(mot, "(") && strings.HasSuffix(mot, ")") {
@@ -41,7 +47,6 @@ func appliquerMarqueurs(mots []string) []string {
 				continue
 			}
 
-		
 			for c := 0; c < count; c++ {
 				dernier := len(resultat) - 1 - c
 				if dernier >= 0 {
@@ -63,7 +68,7 @@ func appliquerMarqueurs(mots []string) []string {
 				}
 			}
 		} else {
-			// Mot normal on l'ajoute à notre liste de résultats (Séance 4)
+			// mot normal on ajooute a notre liste de res (Séance 4)
 			resultat = append(resultat, mot)
 		}
 	}
@@ -116,11 +121,11 @@ func transformer(texte string) string {
 
 	for i, ligne := range lignes {
 		ligne = strings.TrimRight(ligne, "\r") //(Séance 3)
-		
-		mots := strings.Fields(ligne)         
-		mots = appliquerMarqueurs(mots)         
-		mots = corrigerArticles(mots)         
-		
+
+		mots := strings.Fields(ligne)
+		mots = appliquerMarqueurs(mots)
+		mots = corrigerArticles(mots)
+
 		ligneIntermediaire := strings.Join(mots, " ")
 		lignes[i] = formaterPonctuation(ligneIntermediaire)
 	}
