@@ -24,26 +24,42 @@ func appliquerMarqueurs(mots []string) []string {
 		mot := mots[i]
 
 		// gestion marqueurs (up)(low)(cap)(hex)(bin)
-		if mot == "(up)" || mot == "(low)" || mot == "(cap)" || mot == "(hex)" || mot == "(bin)" {
-			// anti-plantage (Séance 4 ne jamais planter si le texte commence par un marqueur)
+		if strings.HasPrefix(mot, "(") && strings.HasSuffix(mot, ")") {
+			contenu := mot[1 : len(mot)-1]
+			parts := strings.Split(contenu, ",")
+			tag := strings.TrimSpace(parts[0])
+
+			count := 1
+			if len(parts) > 1 {
+				if n, err := strconv.Atoi(strings.TrimSpace(parts[1])); err == nil {
+					count = n
+				}
+			}
+
+			// antiplantage (Séance 4 ne jamais planter si le texte commence par un marqueur)
 			if len(resultat) == 0 {
 				continue
 			}
-			dernier := len(resultat) - 1
 
-			if mot == "(up)" {
-				resultat[dernier] = strings.ToUpper(resultat[dernier])
-			} else if mot == "(low)" {
-				resultat[dernier] = strings.ToLower(resultat[dernier])
-			} else if mot == "(cap)" {
-				resultat[dernier] = capitaliser(resultat[dernier])
-			} else if mot == "(hex)" {
-				if val, err := strconv.ParseInt(resultat[dernier], 16, 64); err == nil {
-					resultat[dernier] = strconv.FormatInt(val, 10)
-				}
-			} else if mot == "(bin)" {
-				if val, err := strconv.ParseInt(resultat[dernier], 2, 64); err == nil {
-					resultat[dernier] = strconv.FormatInt(val, 10)
+		
+			for c := 0; c < count; c++ {
+				dernier := len(resultat) - 1 - c
+				if dernier >= 0 {
+					if tag == "up" {
+						resultat[dernier] = strings.ToUpper(resultat[dernier])
+					} else if tag == "low" {
+						resultat[dernier] = strings.ToLower(resultat[dernier])
+					} else if tag == "cap" {
+						resultat[dernier] = capitaliser(resultat[dernier])
+					} else if tag == "hex" {
+						if val, err := strconv.ParseInt(resultat[dernier], 16, 64); err == nil {
+							resultat[dernier] = strconv.FormatInt(val, 10)
+						}
+					} else if tag == "bin" {
+						if val, err := strconv.ParseInt(resultat[dernier], 2, 64); err == nil {
+							resultat[dernier] = strconv.FormatInt(val, 10)
+						}
+					}
 				}
 			}
 		} else {
@@ -76,15 +92,15 @@ func corrigerArticles(mots []string) []string {
 	return mots
 }
 
-// colle les ponctuations au mot précédent
+// ponctuation coller au mot preced
 func formaterPonctuation(ligne string) string {
-	// On découpe et on recolle proprement avec des conditions simples
+	// on découpe et on recolle proprement avec des conditions simples
 	mots := strings.Fields(ligne)
 	var resultat []string
 
 	for i := 0; i < len(mots); i++ {
 		mot := mots[i]
-		// Si c est un signe de ponctuation simple on le colle au dernier mot ajoute
+		// si c est un signe de ponctuation simple on le colle au dernier mot ajoute
 		if (mot == "." || mot == "," || mot == "!" || mot == "?" || mot == ":" || mot == ";") && len(resultat) > 0 {
 			resultat[len(resultat)-1] += mot
 		} else {
@@ -94,15 +110,15 @@ func formaterPonctuation(ligne string) string {
 	return strings.Join(resultat, " ")
 }
 
-// transformer gère le texte ligne par ligne (Séance 3 et 4)
+// gere txt ligne pr ligne(Séance 3 et 4)
 func transformer(texte string) string {
 	lignes := strings.Split(texte, "\n")
 
 	for i, ligne := range lignes {
 		ligne = strings.TrimRight(ligne, "\r") //(Séance 3)
 		
-		mots := strings.Fields(ligne)          
-		mots = appliquerMarqueurs(mots)        
+		mots := strings.Fields(ligne)         
+		mots = appliquerMarqueurs(mots)         
 		mots = corrigerArticles(mots)         
 		
 		ligneIntermediaire := strings.Join(mots, " ")
