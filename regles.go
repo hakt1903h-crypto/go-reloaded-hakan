@@ -23,15 +23,18 @@ func appliquerMarqueurs(mots []string) []string {
 	for i := 0; i < len(mots); i++ {
 		mot := mots[i]
 
-		// Si le marqueur a été coupé en deux par un espace (correction d'1 probleme qui mettais pas les 2 mots en majuscules)
-		if strings.HasPrefix(mot, "(") && !strings.HasSuffix(mot, ")") && i+1 < len(mots) {
+		// (correction car mettais pas les 2 mot en majuscules)
+		if strings.HasPrefix(mot, "(") && !strings.Contains(mot, ")") && i+1 < len(mots) {
 			mot = mot + " " + mots[i+1]
 			i++
 		}
 
 		// gestion marqueurs (up)(low)(cap)(hex)(bin)
-		if strings.HasPrefix(mot, "(") && strings.HasSuffix(mot, ")") {
-			contenu := mot[1 : len(mot)-1]
+		if strings.HasPrefix(mot, "(") && strings.Contains(mot, ")") {
+			idx := strings.Index(mot, ")")
+			contenu := mot[1:idx]
+			trailing := mot[idx+1:] 
+
 			parts := strings.Split(contenu, ",")
 			tag := strings.TrimSpace(parts[0])
 
@@ -67,8 +70,13 @@ func appliquerMarqueurs(mots []string) []string {
 					}
 				}
 			}
+
+			// ponctu colle au preced mot
+			if trailing != "" && len(resultat) > 0 {
+				resultat[len(resultat)-1] += trailing
+			}
 		} else {
-			// mot normal on ajooute a notre liste de res (Séance 4)
+			//mot normal on l'ajoute à notre liste de résultats (Séance 4)
 			resultat = append(resultat, mot)
 		}
 	}
