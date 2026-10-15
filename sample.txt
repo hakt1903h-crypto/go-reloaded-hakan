@@ -1,0 +1,3 @@
+Hakan est un etudiant en b1 cyber a ynov (cap).
+Il a fait go-reloaded avec 1E (hex) lignes et 10 (bin) tests (up, 2).
+C'etait un defi ,et le code marche !
