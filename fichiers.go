@@ -5,7 +5,7 @@ import (
 	"os"
 )
 
-// lireFichier lit le fichier d'entrée (Séance 3)[cite: 3]
+//Lit le fichier (vu e n seance 3 cours charlepeau)
 func lireFichier(chemin string) (string, error) {
 	contenu, err := os.ReadFile(chemin)
 	if err != nil {
@@ -14,7 +14,7 @@ func lireFichier(chemin string) (string, error) {
 	return string(contenu), nil
 }
 
-// ecrireFichier écrit le résultat dans le fichier de sortie (Séance 3)[cite: 3]
+//ecris dans le fichier sorti(Séance 3)
 func ecrireFichier(chemin string, texte string) error {
 	err := os.WriteFile(chemin, []byte(texte), 0644)
 	if err != nil {
