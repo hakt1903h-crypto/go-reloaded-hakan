@@ -12,4 +12,4 @@ Avoir le langage "GO" installé
 Pour lancer le programme, ouvrir le terminal et taper cette commande :
 
 ```bash
-go run . sample.txt result.txt
+go run . textfix.txt result.txt
