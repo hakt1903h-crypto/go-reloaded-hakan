@@ -1,15 +1,15 @@
 # Go-Reloaded-Hakan
 
-> Un outil simple de traitement et d'autocorrection de texte développé en Go.
+> Un outil appris et développé en cours pour traiter et corriger des textes en GO
 
 ## 📋 Description
-Ce projet consiste à créer un programme capable de lire un fichier texte contenant des balises, d'appliquer diverses modifications (conversions, casse, grammaire, ponctuation) et d'écrire le texte corrigé dans un nouveau fichier.
+Ce projet consiste à créer un programme capable de lire un fichier texte contenant des balises, d'appliquer diverses modifications (conversions, casse, grammaire, ponctuation) et d'écrire le texte corrigé dans un nouveau fichier en sortie.
 
 ## ⚙️ Prérequis
-Assure-toi d'avoir **Go** installé sur ta machine.
+Avoir le langage "GO" installé 
 
 ## 🚀 Utilisation
-Pour lancer le programme, ouvre ton terminal à la racine du projet et utilise la commande suivante :
+Pour lancer le programme, ouvrir le terminal et taper cette commande :
 
 ```bash
-go run . <fichier_entree.txt> <fichier_sortie.txt>
+go run . sample.txt result.txt
