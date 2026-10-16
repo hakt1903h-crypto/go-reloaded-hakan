@@ -1,35 +1,15 @@
-# GO-RELOADED-HAKAN
+# Go-Reloaded-Hakan
 
-Foobar is a Python library for dealing with word pluralization.
+> Un outil simple de traitement et d'autocorrection de texte développé en Go.
 
-## Installation
+## 📋 Description
+Ce projet consiste à créer un programme capable de lire un fichier texte contenant des balises, d'appliquer diverses modifications (conversions, casse, grammaire, ponctuation) et d'écrire le texte corrigé dans un nouveau fichier.
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
+## ⚙️ Prérequis
+Assure-toi d'avoir **Go** installé sur ta machine.
+
+## 🚀 Utilisation
+Pour lancer le programme, ouvre ton terminal à la racine du projet et utilise la commande suivante :
 
 ```bash
-pip install foobar
-```
-
-## Usage
-
-```python
-import foobar
-
-# returns 'words'
-foobar.pluralize('word')
-
-# returns 'geese'
-foobar.pluralize('goose')
-
-# returns 'phenomenon'
-foobar.singularize('phenomena')
-```
-
-## Contributing
-
-Pull requests are welcome. For major changes, please open an issue first
-to discuss what you would like to change.
-
-Please make sure to update tests as appropriate.
-
-## License
+go run . <fichier_entree.txt> <fichier_sortie.txt>
