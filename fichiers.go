@@ -5,7 +5,7 @@ import (
 	"os"
 )
 
-//Lit le fichier (vu e n seance 3 cours charlepeau)
+//lit le fichier (vu e n seance 3 cours charlepeau)
 func lireFichier(chemin string) (string, error) {
 	contenu, err := os.ReadFile(chemin)
 	if err != nil {
